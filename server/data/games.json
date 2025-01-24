@@ -1,0 +1,18 @@
+{
+    "edd7cc4a-4ab2-4a0f-bf2c-c207a539bc04": {
+        "title": "Days gone",
+        "category": "Zombie",
+        "maxLevel": "100",
+        "imageUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202011/0921/B7jV8ThPs8eqDz8NRRllf7g6.jpg",
+        "summary": "Zombie based game",
+        "_id": "edd7cc4a-4ab2-4a0f-bf2c-c207a539bc04"
+    },
+    "cd6c6eb3-f5e4-46bc-885f-205fbd214121": {
+        "title": "GTA V",
+        "category": "Action",
+        "maxLevel": "100",
+        "imageUrl": "https://vulcanpost.com/wp-content/uploads/2015/04/GTAV-Review.jpg",
+        "summary": "Shooter/Action game",
+        "_id": "cd6c6eb3-f5e4-46bc-885f-205fbd214121"
+    }
+}
