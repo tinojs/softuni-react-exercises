@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import AuthContext from "./contexts/authContext";
 import * as authService from "./services/authService";
+import Path from "./paths";
 
 import Header from "./components/Header/Header";
 import Home from "./components/home/Home";
@@ -22,7 +23,7 @@ function App() {
 
     setAuth(result);
 
-    navigate("/");
+    navigate(Path.Home);
   };
 
   return (
@@ -31,7 +32,7 @@ function App() {
         <Header />
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path={Path.Home} element={<Home />} />
           <Route path="/games" element={<Gamelist />} />
           <Route path="/games/create" element={<GameCreate />} />
           <Route path="/login" element={<Login />} />
