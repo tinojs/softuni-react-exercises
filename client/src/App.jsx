@@ -15,7 +15,6 @@ import GameDetails from "./components/game-details/GameDetails";
 
 function App() {
   const navigate = useNavigate();
-
   const [auth, setAuth] = useState({});
 
   const loginSubmitHandler = async (values) => {
@@ -26,8 +25,15 @@ function App() {
     navigate(Path.Home);
   };
 
+  const values = {
+    loginSubmitHandler,
+    username: auth.username,
+    email: auth.email,
+    isAuthenticated: !!auth.username,
+  };
+
   return (
-    <AuthContext.Provider value={{ loginSubmitHandler }}>
+    <AuthContext.Provider value={values}>
       <div id="box">
         <Header />
 
