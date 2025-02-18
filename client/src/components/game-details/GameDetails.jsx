@@ -4,9 +4,10 @@ import { useParams } from "react-router-dom";
 import * as gameService from "../../services/gameService";
 import * as commentService from "../../services/commentService";
 import AuthContext from "../../contexts/authContext";
+import useForm from "../../hooks/useForm";
 
 export default function GameDetails() {
-  const { email } = useContext(AuthContext);
+  const { email, userId } = useContext(AuthContext);
   const [game, setGame] = useState({});
   const [comments, setComments] = useState([]);
   const { gameId } = useParams();
@@ -17,18 +18,17 @@ export default function GameDetails() {
     commentService.getAll(gameId).then(setComments);
   }, [gameId]);
 
-  const addCommentHandler = async (e) => {
-    e.preventDefault();
-
-    const fromData = new FormData(e.currentTarget);
-
-    const newComment = await commentService.create(
-      gameId,
-      fromData.get("comment")
-    );
+  const addCommentHandler = async (values) => {
+    const newComment = await commentService.create(gameId, values.comment);
 
     setComments((state) => [...state, { ...newComment, owner: { email } }]); //not only add the info for the new comment but add the author of it with their email.
   };
+
+  const { values, onChange, onSubmit } = useForm(addCommentHandler, {
+    comment: "",
+  });
+
+  const isOwner = userId === game._ownerId;
 
   return (
     <section id="game-details">
@@ -55,22 +55,25 @@ export default function GameDetails() {
 
           {comments.length === 0 && <p className="no-comment">No comments.</p>}
         </div>
-        {/* <div className="buttons">
-          <a href="#" className="button">
-            Edit
-          </a>
-          <a href="#" className="button">
-            Delete
-          </a>
-        </div> */}
+        {isOwner && (
+          <div className="buttons">
+            <a href="#" className="button">
+              Edit
+            </a>
+            <a href="#" className="button">
+              Delete
+            </a>
+          </div>
+        )}
       </div>
       <article className="create-comment">
         <label>Add new comment:</label>
-        <form className="form" onSubmit={addCommentHandler}>
+        <form className="form" onSubmit={onSubmit}>
           <textarea
             name="comment"
+            value={values.comment}
+            onChange={onChange}
             placeholder="Comment......"
-            defaultValue={""}
           />
           <input
             className="btn submit"
