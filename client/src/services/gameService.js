@@ -23,6 +23,15 @@ export const create = async (gameData) => {
     return result;
 };
 
+//try
+
+export const edit = async (gameId, gameData) => {
+
+    const result = await request.put(`${baseUrl}/${gameId}`, gameData);
+
+    return result;
+};
+
 
 //we take the data from the form(gameData) and we make a request to post to the server. body - takes the game data object and converts it into string.
 

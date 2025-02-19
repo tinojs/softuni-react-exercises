@@ -1,10 +1,12 @@
-import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 import * as gameService from "../../services/gameService";
 import * as commentService from "../../services/commentService";
 import AuthContext from "../../contexts/authContext";
 import useForm from "../../hooks/useForm";
+import { pathToUrl } from "../../utils/pathUtils";
+import Path from "../../paths";
 
 export default function GameDetails() {
   const { email, userId } = useContext(AuthContext);
@@ -24,9 +26,11 @@ export default function GameDetails() {
     setComments((state) => [...state, { ...newComment, owner: { email } }]); //not only add the info for the new comment but add the author of it with their email.
   };
 
-  const { values, onChange, onSubmit } = useForm(addCommentHandler, {
+  const initialValues = useMemo(() => ({
     comment: "",
-  });
+  }), []);
+
+  const { values, onChange, onSubmit } = useForm(addCommentHandler, initialValues);
 
   const isOwner = userId === game._ownerId;
 
@@ -57,12 +61,12 @@ export default function GameDetails() {
         </div>
         {isOwner && (
           <div className="buttons">
-            <a href="#" className="button">
+            <Link to={pathToUrl(Path.GameEdit, { gameId })} className="button">
               Edit
-            </a>
-            <a href="#" className="button">
+            </Link>
+            <Link to="/games/:gameId/delete" className="button">
               Delete
-            </a>
+            </Link>
           </div>
         )}
       </div>
